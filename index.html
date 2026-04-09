@@ -242,7 +242,10 @@
         .hero-card-badge i { width: 15px; height: 15px; }
 
         /* ── SERVICES ── */
-        .services { background: var(--cream-alt); }
+        .services {
+            background: var(--cream-alt);
+            padding-bottom: 3.5rem;
+        }
         .services-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 3.5rem; }
         .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .svc-card {
@@ -451,7 +454,10 @@
         }
 
         /* ── ABOUT ── */
-        .about { background: var(--cream); }
+        .about {
+            background: var(--cream);
+            padding-top: 3.5rem;
+        }
         .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
         .about-visual { display: flex; flex-direction: column; gap: 1rem; }
         .about-plate {
@@ -1391,6 +1397,9 @@
         if (reviewWidgetLaunch) {
             reviewWidgetLaunch.addEventListener('click', expandWidget);
             reviewWidgetLaunch.setAttribute('aria-expanded', 'true');
+        }
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            collapseWidget();
         }
         setInterval(() => {
             reviewWidget.classList.add('is-fading');
