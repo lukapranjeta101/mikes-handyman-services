@@ -140,6 +140,11 @@
         .nav-center a { font-size: 0.88rem; font-weight: 500; color: var(--slate-700); text-decoration: none; transition: color 0.2s; }
         .nav-center a:hover { color: var(--blue); }
         .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .nav-right .btn,
+        #mob-menu .btn {
+            padding-top: 0.56rem;
+            padding-bottom: 0.56rem;
+        }
         .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
         .hamburger span { display: block; width: 22px; height: 2px; background: var(--slate-700); border-radius: 2px; transition: all 0.3s; }
 
@@ -285,14 +290,17 @@
         .svc-compare-after {
             position: absolute;
             inset: 0;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
         }
-        .svc-compare-before { background-image: url('plumbing/before.jpg'); }
         .svc-compare-after {
-            background-image: url('plumbing/after.jpg');
-            clip-path: inset(0 0 0 50%);
+            left: 50%;
+            overflow: hidden;
+        }
+        .svc-compare-before img,
+        .svc-compare-after img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .svc-compare-divider {
             position: absolute;
@@ -902,8 +910,12 @@
             </div>
             <div class="svc-card fade-up delay-1" data-gallery="plumbing">
                 <div class="svc-compare" aria-hidden="true">
-                    <div class="svc-compare-before"></div>
-                    <div class="svc-compare-after" id="plumbingCompareAfter"></div>
+                    <div class="svc-compare-before">
+                        <img src="plumbing/before.jpg" alt="">
+                    </div>
+                    <div class="svc-compare-after" id="plumbingCompareAfter">
+                        <img src="plumbing/after.jpg" alt="">
+                    </div>
                     <div class="svc-compare-divider" id="plumbingCompareDivider"></div>
                     <span class="svc-compare-label before">Before</span>
                     <span class="svc-compare-label after">After</span>
@@ -1255,7 +1267,7 @@
     if (plumbingCompareRange && plumbingCompareAfter && plumbingCompareDivider) {
         const setComparePosition = (value) => {
             const pos = Number(value);
-            plumbingCompareAfter.style.clipPath = `inset(0 0 0 ${pos}%)`;
+            plumbingCompareAfter.style.left = `${pos}%`;
             plumbingCompareDivider.style.left = `${pos}%`;
         };
         setComparePosition(plumbingCompareRange.value);
