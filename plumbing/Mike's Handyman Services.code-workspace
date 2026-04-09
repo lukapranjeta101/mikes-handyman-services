@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "Mike's Handyman Services",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5501
+	}
+}

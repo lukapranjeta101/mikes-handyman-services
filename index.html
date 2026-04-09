@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mike's Handyman Services | Northeast Ohio Home Repairs</title>
-    <meta name="description" content="Reliable, honest handyman services in Northeast Ohio. Serving Mayfield Heights, Cleveland, Beachwood, Solon, Willoughby and surrounding communities. Licensed & insured. Free estimates.">
+    <meta name="description" content="Reliable, honest handyman services in Northeast Ohio. Serving Mayfield Heights, Cleveland, Beachwood, Solon, Willoughby and surrounding communities. Licensed & insured. Request an appointment.">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,7 +98,7 @@
         /* ── NAV ── */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            padding: 1.2rem 2rem;
+            padding: 0.5rem 1.4rem;
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(255,255,255,0.90);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -115,12 +115,12 @@
             border: 1px solid var(--border);
             border-radius: 999px;
             box-shadow: 0 12px 26px rgba(28,36,51,0.12);
-            padding: 0.75rem 1.35rem;
+            padding: 0.4rem 1rem;
         }
         .nav-logo { text-decoration: none; display: inline-flex; align-items: center; gap: 0.7rem; }
         .nav-logo-mark {
-            width: 42px;
-            height: 42px;
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             object-fit: cover;
             box-shadow: 0 2px 10px rgba(28,36,51,0.14);
@@ -129,7 +129,14 @@
         .nav-logo-text { display: block; }
         .nav-logo-title { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 700; color: var(--slate-900); letter-spacing: -0.01em; }
         .nav-logo-sub { display: block; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--slate-300); margin-top: 1px; }
-        .nav-center { display: flex; gap: 2.25rem; list-style: none; }
+        .nav-center {
+            display: flex;
+            gap: 2.25rem;
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
         .nav-center a { font-size: 0.88rem; font-weight: 500; color: var(--slate-700); text-decoration: none; transition: color 0.2s; }
         .nav-center a:hover { color: var(--blue); }
         .nav-right { display: flex; align-items: center; gap: 1rem; }
@@ -232,40 +239,208 @@
         /* ── SERVICES ── */
         .services { background: var(--cream-alt); }
         .services-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 3.5rem; }
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         .svc-card {
-            background: var(--cream-card);
-            border: 1px solid var(--border);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.35);
             border-radius: var(--radius);
-            padding: 2rem 1.75rem;
+            padding: 1rem;
             position: relative; overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            cursor: pointer;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .svc-card > * { position: relative; z-index: 1; }
+        .svc-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,0.82), rgba(15,23,42,0.35) 55%, rgba(15,23,42,0.12));
+            z-index: 0;
+            pointer-events: none;
         }
         .svc-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
             background: linear-gradient(90deg, var(--amber), var(--blue));
             opacity: 0; transition: opacity 0.3s;
+            z-index: 2;
         }
+        .svc-card[data-gallery="hvac"] { background-image: url('HVAC/480609920_616513911133036_1014313692197765923_n.jpg'); }
+        .svc-card[data-gallery="plumbing"] { background-image: none; }
+        .svc-card[data-gallery="handyman"] { background-image: url('Handy Man/473082082_590647757052985_8574184342694388885_n.jpg'); }
         .svc-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(53,169,225,0.18); }
         .svc-card:hover::before { opacity: 1; }
+        .svc-compare {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .svc-compare-before,
+        .svc-compare-after {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .svc-compare-before { background-image: url('plumbing/before.jpg'); }
+        .svc-compare-after {
+            background-image: url('plumbing/after.jpg');
+            clip-path: inset(0 0 0 50%);
+        }
+        .svc-compare-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: rgba(255,255,255,0.95);
+            transform: translateX(-50%);
+            box-shadow: 0 0 8px rgba(15,23,42,0.45);
+        }
+        .svc-compare-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: rgba(15,23,42,0.5);
+            transform: translate(-50%, -50%);
+        }
+        .svc-compare-label {
+            position: absolute;
+            top: 0.55rem;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+            background: rgba(15,23,42,0.5);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 999px;
+            padding: 0.2rem 0.5rem;
+        }
+        .svc-compare-label.before { left: 0.55rem; }
+        .svc-compare-label.after { right: 0.55rem; }
+        .svc-compare-range {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+            cursor: ew-resize;
+        }
         .svc-media {
-            width: calc(100% + 3.5rem);
-            margin: -2rem -1.75rem 1.25rem;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-            border-bottom: 1px solid var(--border);
+            display: none;
         }
         .svc-icon {
-            width: 50px; height: 50px; background: var(--blue-pale); border-radius: 11px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+            width: 34px; height: 34px; background: rgba(255,255,255,0.18); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 0.65rem;
             transition: background 0.3s;
         }
-        .svc-icon i { width: 22px; height: 22px; color: var(--blue); transition: color 0.3s; }
+        .svc-icon i,
+        .svc-icon svg {
+            width: 15px;
+            height: 15px;
+            color: #fff;
+            stroke: #fff;
+            transition: color 0.3s, stroke 0.3s;
+        }
         .svc-card:hover .svc-icon { background: var(--blue); }
         .svc-card:hover .svc-icon i { color: #fff; }
-        .svc-title { font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 600; color: var(--slate-900); margin-bottom: 0.5rem; }
-        .svc-desc { font-size: 0.87rem; color: var(--slate-500); line-height: 1.75; }
+        .svc-title { font-family: 'Lora', serif; font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.35rem; }
+        .svc-desc { font-size: 0.75rem; color: rgba(255,255,255,0.85); line-height: 1.55; }
+
+        .gallery-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.82);
+            padding: 1rem;
+        }
+        .gallery-modal.open { display: flex; }
+        .gallery-panel {
+            width: min(900px, 100%);
+            background: transparent;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+        }
+        .gallery-title {
+            font-family: 'Lora', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .gallery-close {
+            border: 0;
+            background: #f1f5f9;
+            color: var(--slate-700);
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .gallery-view {
+            padding: 1rem;
+            max-height: min(70vh, 760px);
+            overflow-y: auto;
+            background: transparent;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+        .gallery-grid-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: block;
+            background: #e2e8f0;
+        }
+        .gallery-foot {
+            padding: 0.75rem 1rem 1rem;
+            font-size: 0.84rem;
+            color: rgba(255,255,255,0.85);
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+        }
+
+        @media (max-width: 860px) {
+            .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 520px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
 
         /* ── ABOUT ── */
         .about { background: var(--cream); }
@@ -300,61 +475,151 @@
         .about-body p { font-size: 1rem; color: var(--slate-500); line-height: 1.85; margin-bottom: 1.25rem; }
         .about-body p:last-child { margin-bottom: 0; }
 
-        /* ── REVIEWS ── */
-        .reviews { background: var(--cream-alt); }
-        .reviews-header { text-align: center; margin-bottom: 3.5rem; }
-        .reviews-header .sec-label { justify-content: center; }
-        .reviews-header .sec-label::before { display: none; }
-        .reviews-header .sec-body { margin: 0 auto; text-align: center; }
-        .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        .review-card {
-            background: var(--cream-card);
+        /* ── REVIEW WIDGET ── */
+        .review-widget {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            width: min(360px, calc(100vw - 1.5rem));
+            background: #fff;
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.75rem;
-            box-shadow: var(--shadow-sm);
-            display: flex; flex-direction: column;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 14px;
+            box-shadow: 0 20px 45px rgba(17, 24, 39, 0.18);
+            padding: 0.95rem 1rem 1rem;
+            z-index: 1200;
+            transform: translateY(28px);
+            opacity: 0;
+            pointer-events: auto;
+            animation: reviewWidgetIn 0.45s ease 0.45s forwards;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
-        .review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-        .review-stars { display: flex; gap: 2px; margin-bottom: 1rem; }
-        .review-stars i { width: 15px; height: 15px; color: #D4AF37; fill: #D4AF37; stroke: #D4AF37; }
-        .review-text {
-            font-size: 0.9rem; color: var(--slate-700); line-height: 1.8;
-            flex: 1; margin-bottom: 1.5rem; font-style: italic;
-            position: relative; padding-top: 0.5rem;
+        @keyframes reviewWidgetIn {
+            to { transform: translateY(0); opacity: 1; }
         }
-        .review-text::before {
-            content: '\201C';
-            font-family: 'Lora', serif; font-size: 4rem; color: var(--border);
-            line-height: 0; vertical-align: -1.2rem;
-            margin-right: 0.15rem; font-style: normal;
+        .review-widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--slate-500);
+            margin-bottom: 0.45rem;
         }
-        .review-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-        .review-name { font-size: 0.88rem; font-weight: 700; color: var(--slate-900); }
-        .review-platform {
-            display: inline-flex; align-items: center; gap: 0.35rem;
-            font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-            padding: 0.22rem 0.65rem; border-radius: 100px;
+        .review-widget-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .platform-fb { background: #E8EEF8; color: #1877F2; }
-        .platform-nd { background: #FCECEE; color: #D9485F; }
-        .platform-fb svg, .platform-nd svg { width: 11px; height: 11px; display: block; }
-        .reviews-photo { margin-top: 2rem; }
-        .reviews-photo-link { display: block; cursor: pointer; }
-        .reviews-photo img {
-            width: 100%;
-            max-width: 620px;
-            height: auto;
-            border-radius: var(--radius);
+        .review-widget-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 rgba(34, 197, 94, 0.45);
+            animation: widgetPulse 1.8s ease-out infinite;
+        }
+        @keyframes widgetPulse {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
+            100% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+        }
+        .review-widget-minimize {
+            border: 0;
+            background: #f3f4f6;
+            color: var(--slate-700);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .review-widget-minimize:hover { background: #e5e7eb; color: var(--slate-900); }
+        .review-widget-stars {
+            color: #D4AF37;
+            font-size: 0.92rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.35rem;
+        }
+        .review-widget-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            color: var(--slate-700);
+            margin-bottom: 0.72rem;
+        }
+        .review-widget-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+        }
+        .review-widget-name {
+            font-size: 0.83rem;
+            font-weight: 700;
+            color: var(--slate-900);
+        }
+        .review-widget-source {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.64rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+        }
+        .review-widget-source.platform-fb { background: #E8EEF8; color: #1877F2; }
+        .review-widget-source.platform-nd { background: #FCECEE; color: #D9485F; }
+        .review-widget.is-fading .review-widget-text,
+        .review-widget.is-fading .review-widget-name,
+        .review-widget.is-fading .review-widget-source {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+        .review-widget-text,
+        .review-widget-name,
+        .review-widget-source {
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+        .review-widget-launch {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 1199;
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-md);
-            display: block;
-            margin: 0 auto;
-            transition: transform 0.28s ease;
+            background: #fff;
+            color: var(--slate-900);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            border-radius: 999px;
+            padding: 0.55rem 0.9rem;
+            box-shadow: 0 12px 26px rgba(28,36,51,0.16);
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
-        .reviews-photo-link:hover img,
-        .reviews-photo-link:focus-visible img { transform: scale(1.06); }
+        .review-widget.is-collapsed {
+            animation: none;
+            opacity: 0;
+            transform: translateY(12px) scale(0.97);
+            pointer-events: none;
+        }
+        .review-widget.is-collapsed + .review-widget-launch {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
 
         /* ── SERVICE AREA ── */
         .area {
@@ -376,25 +641,12 @@
             background: radial-gradient(circle, rgba(217,72,95,0.1) 0%, transparent 70%);
             border-radius: 50%; pointer-events: none;
         }
-        .area-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1.35fr; gap: 6rem; align-items: center; }
+        .area-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
         .area .sec-label { color: var(--amber); }
         .area .sec-label::before { background: var(--amber); }
         .area .sec-title { color: #fff; }
         .area .sec-title em { color: var(--blue-lt); }
         .area .sec-body { color: rgba(255,255,255,0.5); }
-        .area-map {
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.12);
-            box-shadow: var(--shadow-lg);
-            background: rgba(255,255,255,0.04);
-        }
-        .area-map iframe {
-            width: 100%;
-            height: 370px;
-            border: 0;
-            display: block;
-        }
 
         /* ── CONTACT ── */
         .contact { background: var(--cream); }
@@ -497,18 +749,26 @@
             .hero-card-side { display: none; }
             .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
             .about-inner { grid-template-columns: 1fr; gap: 3rem; }
-            .area-inner { grid-template-columns: 1fr; gap: 3rem; }
+            .area-inner { gap: 3rem; }
             .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
-            .reviews-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 768px) {
             .section { padding: 5rem 0; }
             .nav-center, .nav-right { display: none; }
             .hamburger { display: flex; }
             .services-grid { grid-template-columns: 1fr 1fr; }
-            .reviews-grid { grid-template-columns: 1fr; }
             .footer-inner { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
             .hero-btns { flex-direction: column; align-items: center; }
+            .review-widget {
+                right: 0.75rem;
+                left: 0.75rem;
+                width: auto;
+                bottom: 0.75rem;
+            }
+            .review-widget-launch {
+                right: 0.75rem;
+                bottom: 0.75rem;
+            }
         }
         @media (max-width: 480px) {
             .nav-logo-mark { width: 36px; height: 36px; border-radius: 8px; }
@@ -534,11 +794,10 @@
     <ul class="nav-center">
         <li><a href="#services">Services</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#reviews">Reviews</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
-        <a href="tel:+14402894323" class="btn btn-amber"><i data-lucide="phone" aria-hidden="true"></i>Call Now</a>
+        <a href="tel:+14402894323" class="btn btn-amber"><i data-lucide="phone" aria-hidden="true"></i>Call</a>
     </div>
     <button class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Open menu">
         <span></span><span></span><span></span>
@@ -549,9 +808,8 @@
     <button id="mob-close" onclick="toggleMenu()" aria-label="Close menu">&times;</button>
     <a href="#services" onclick="toggleMenu()">Services</a>
     <a href="#about" onclick="toggleMenu()">About</a>
-    <a href="#reviews" onclick="toggleMenu()">Reviews</a>
     <a href="#contact" onclick="toggleMenu()">Contact</a>
-    <a href="tel:+14402894323" onclick="toggleMenu()" class="btn btn-amber" style="margin-top:1rem;font-family:'DM Sans',sans-serif;font-size:1rem;"><i data-lucide="phone" aria-hidden="true"></i>Call Now</a>
+    <a href="tel:+14402894323" onclick="toggleMenu()" class="btn btn-amber" style="margin-top:1rem;font-family:'DM Sans',sans-serif;font-size:1rem;"><i data-lucide="phone" aria-hidden="true"></i>Call</a>
 </div>
 
 <!-- HERO -->
@@ -592,7 +850,7 @@
         <div class="hero-content">
             <div class="hero-eyebrow fade-up">
                 <span class="hero-eyebrow-dot"></span>
-                Serving Northeast Ohio Since 2004
+                Serving Northeast Ohio Since 1988
             </div>
             <h1 class="hero-headline fade-up delay-1">
                 HVAC &amp; Handyman Services in Mayfield Heights, Ohio
@@ -611,11 +869,11 @@
                 </div>
                 <div class="trust-item">
                     <i data-lucide="tag" class="trust-icon" aria-hidden="true"></i>
-                    Request an Estimate
+                    Request an Appointment
                 </div>
                 <div class="trust-item">
                     <i data-lucide="clock" class="trust-icon" aria-hidden="true"></i>
-                    20+ Years Local
+                    36+ Years Local
                 </div>
             </div>
         </div>
@@ -636,29 +894,39 @@
             </div>
         </div>
         <div class="services-grid">
-            <div class="svc-card fade-up">
-                <img src="windowfixing.jpg" alt="Technician repairing a home window" class="svc-media">
-                <div class="svc-icon"><i data-lucide="wrench" aria-hidden="true"></i></div>
-                <div class="svc-title">General Repairs</div>
-                <p class="svc-desc">Doors that stick, cabinets off their hinges, drywall dings — the everyday fixes that pile up. Mike handles them efficiently and affordably.</p>
-            </div>
-            <div class="svc-card fade-up delay-1">
-                <img src="furnace.jpg" alt="HVAC technician servicing a furnace unit" class="svc-media">
+            <div class="svc-card fade-up" data-gallery="hvac">
+                <img src="HVAC/480609920_616513911133036_1014313692197765923_n.jpg" alt="HVAC service work" class="svc-media">
                 <div class="svc-icon"><i data-lucide="thermometer" aria-hidden="true"></i></div>
-                <div class="svc-title">HVAC Services</div>
-                <p class="svc-desc">Filter replacements, unit tune-ups, vent cleaning, and basic HVAC maintenance to keep your system running efficiently all year.</p>
+                <div class="svc-title">HVAC</div>
+                <p class="svc-desc">AC and furnace tune-ups, filter changes, and system checks to keep your home comfortable year-round.</p>
             </div>
-            <div class="svc-card fade-up delay-1">
-                <img src="electrical.jpg" alt="Electrician performing electrical service work" class="svc-media">
-                <div class="svc-icon"><i data-lucide="zap" aria-hidden="true"></i></div>
-                <div class="svc-title">Electrical Work</div>
-                <p class="svc-desc">Outlet replacements, light fixture installs, switch repairs, and ceiling fan installation. Safe, code-compliant work by a licensed pro.</p>
+            <div class="svc-card fade-up delay-1" data-gallery="plumbing">
+                <div class="svc-compare" aria-hidden="true">
+                    <div class="svc-compare-before"></div>
+                    <div class="svc-compare-after" id="plumbingCompareAfter"></div>
+                    <div class="svc-compare-divider" id="plumbingCompareDivider"></div>
+                    <span class="svc-compare-label before">Before</span>
+                    <span class="svc-compare-label after">After</span>
+                    <input
+                        type="range"
+                        class="svc-compare-range"
+                        id="plumbingCompareRange"
+                        min="0"
+                        max="100"
+                        value="50"
+                        aria-label="Before and after plumbing photo comparison slider"
+                    >
+                </div>
+                <img src="plumbing/480599434_28357483550566709_7613125900174738773_n.jpg" alt="Plumbing repair work" class="svc-media">
+                <div class="svc-icon"><i data-lucide="droplets" aria-hidden="true"></i></div>
+                <div class="svc-title">Plumbing</div>
+                <p class="svc-desc">Leaky faucets, toilet repairs, drain issues, and other common plumbing fixes handled quickly and professionally.</p>
             </div>
-            <div class="svc-card fade-up delay-3">
-                <img src="personworking.jpg" alt="Handyman working on a water heater system" class="svc-media">
-                <div class="svc-icon"><i data-lucide="snowflake" aria-hidden="true"></i></div>
-                <div class="svc-title">Seasonal Maintenance</div>
-                <p class="svc-desc">Gutter cleaning, caulking, weatherstripping, and pre-winter prep. Stay ahead of Ohio's weather before it becomes a costly problem.</p>
+            <div class="svc-card fade-up delay-2" data-gallery="handyman">
+                <img src="Handy Man/473082082_590647757052985_8574184342694388885_n.jpg" alt="Handyman repair work" class="svc-media">
+                <div class="svc-icon"><i data-lucide="wrench" aria-hidden="true"></i></div>
+                <div class="svc-title">Handy Man</div>
+                <p class="svc-desc">Doors that stick, cabinets off their hinges, drywall dings, and other everyday fixes around the house.</p>
             </div>
         </div>
     </div>
@@ -675,8 +943,8 @@
                     <div class="about-plate-role">Owner · Mayfield Heights, OH</div>
                     <div class="about-creds">
                         <div class="about-cred"><i data-lucide="shield-check" aria-hidden="true"></i> Licensed &amp; Insured</div>
-                        <div class="about-cred"><i data-lucide="map-pin" aria-hidden="true"></i> Born &amp; raised in Northeast Ohio</div>
-                        <div class="about-cred"><i data-lucide="clock" aria-hidden="true"></i> 20+ years of experience</div>
+                        <div class="about-cred"><i data-lucide="map-pin" aria-hidden="true"></i> In Northeast Ohio for 55 years</div>
+                        <div class="about-cred"><i data-lucide="clock" aria-hidden="true"></i> 36+ years of experience</div>
                         <div class="about-cred"><i data-lucide="dollar-sign" aria-hidden="true"></i> Honest, upfront pricing</div>
                     </div>
                 </div>
@@ -689,154 +957,12 @@
                 <div class="sec-label">About Mike</div>
                 <h2 class="sec-title">A neighbor you can<br><em>actually trust.</em></h2>
                 <div class="about-body">
-                    <p>Mike has been serving Northeast Ohio homeowners for over two decades. He grew up in the area, raised his family here, and built his business entirely on word-of-mouth — which tells you everything you need to know.</p>
+                    <p>Mike has been serving Northeast Ohio homeowners for over three decades. He grew up in the area, raised his family here, and built his business entirely on word-of-mouth — which tells you everything you need to know.</p>
                     <p>There are no subcontractors, no bait-and-switch quotes, and no disappearing acts. When you call Mike, Mike shows up. He'll walk through the job with you, give you a straight price, and get it done right.</p>
                     <p>Whether it's a weekend honey-do list or something that's been nagging at you for months, Mike is the kind of handyman your grandparents had — dependable, skilled, and genuinely invested in doing good work for the community he calls home.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- REVIEWS -->
-<section class="reviews section" id="reviews">
-    <div class="container">
-        <div class="reviews-header fade-up">
-            <div class="sec-label">What Neighbors Are Saying</div>
-            <h2 class="sec-title">Trusted across <em>Northeast Ohio</em></h2>
-            <p class="sec-body">Real reviews from real neighbors on Facebook and Nextdoor. Mike's reputation is built one job at a time.</p>
-        </div>
-
-        <!-- REVIEWS: Replace placeholder content below with real reviews from:
-             Facebook: https://www.facebook.com/handymanhvacguy/
-             Nextdoor:  https://nextdoor.com/pages/mikes-handyman-and-hvac-services-mayfield-heights-oh/
-        -->
-        <div class="reviews-grid">
-
-            <div class="review-card fade-up">
-                <div class="review-stars" aria-label="5 out of 5 stars">
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                </div>
-                <p class="review-text">Mike fixed our leaky faucet and replaced a light fixture the same afternoon he called back. Honest price, clean work, no fuss. He's our go-to from now on.</p>
-                <div class="review-footer">
-                    <div class="review-name">Jennifer R.</div>
-                    <span class="review-platform platform-fb">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <circle cx="12" cy="12" r="12" fill="#1877F2"/>
-                            <path fill="#FFFFFF" d="M13.71 20v-7.3h2.45l.37-2.85h-2.82V8.02c0-.83.23-1.39 1.42-1.39h1.52V4.07c-.26-.03-1.16-.07-2.2-.07-2.18 0-3.67 1.33-3.67 3.78v2.07H8.32v2.85h2.45V20h2.94z"/>
-                        </svg> Facebook
-                    </span>
-                </div>
-            </div>
-
-            <div class="review-card fade-up delay-1">
-                <div class="review-stars" aria-label="5 out of 5 stars">
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                </div>
-                <p class="review-text">I've used Mike twice now — once for drywall and once for HVAC maintenance. Both times he was on time, explained everything clearly, and the price was exactly what he quoted. Highly recommend.</p>
-                <div class="review-footer">
-                    <div class="review-name">Tom W.</div>
-                    <span class="review-platform platform-nd">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path fill="#8ED500" d="M10.42 3.2a2.2 2.2 0 0 0-3.74 1.57v4.66h-2.5A2.2 2.2 0 0 0 2 11.63v8.77C2 21.28 2.72 22 3.6 22h6.31c.88 0 1.6-.72 1.6-1.6v-6.78a.6.6 0 0 1 1.2 0v6.78c0 .88.72 1.6 1.6 1.6h6.09c.88 0 1.6-.72 1.6-1.6v-8.64c0-.65-.27-1.27-.74-1.7l-8.6-7.86a2.18 2.18 0 0 0-2.24 0z"/>
-                        </svg> Nextdoor
-                    </span>
-                </div>
-            </div>
-
-            <div class="review-card fade-up delay-2">
-                <div class="review-stars" aria-label="5 out of 5 stars">
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                </div>
-                <p class="review-text">Finally found a handyman in Beachwood who actually shows up when he says he will. Mike patched and painted a whole section of our living room — you can't even tell anything was wrong.</p>
-                <div class="review-footer">
-                    <div class="review-name">Sandra M.</div>
-                    <span class="review-platform platform-fb">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <circle cx="12" cy="12" r="12" fill="#1877F2"/>
-                            <path fill="#FFFFFF" d="M13.71 20v-7.3h2.45l.37-2.85h-2.82V8.02c0-.83.23-1.39 1.42-1.39h1.52V4.07c-.26-.03-1.16-.07-2.2-.07-2.18 0-3.67 1.33-3.67 3.78v2.07H8.32v2.85h2.45V20h2.94z"/>
-                        </svg> Facebook
-                    </span>
-                </div>
-            </div>
-
-            <div class="review-card fade-up">
-                <div class="review-stars" aria-label="5 out of 5 stars">
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                </div>
-                <p class="review-text">Called Mike on a Monday, he was at our house Wednesday morning. Fixed three things we'd been putting off for months. We should have called sooner. Great guy, great prices.</p>
-                <div class="review-footer">
-                    <div class="review-name">Dave &amp; Lisa K.</div>
-                    <span class="review-platform platform-nd">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path fill="#8ED500" d="M10.42 3.2a2.2 2.2 0 0 0-3.74 1.57v4.66h-2.5A2.2 2.2 0 0 0 2 11.63v8.77C2 21.28 2.72 22 3.6 22h6.31c.88 0 1.6-.72 1.6-1.6v-6.78a.6.6 0 0 1 1.2 0v6.78c0 .88.72 1.6 1.6 1.6h6.09c.88 0 1.6-.72 1.6-1.6v-8.64c0-.65-.27-1.27-.74-1.7l-8.6-7.86a2.18 2.18 0 0 0-2.24 0z"/>
-                        </svg> Nextdoor
-                    </span>
-                </div>
-            </div>
-
-            <div class="review-card fade-up delay-1">
-                <div class="review-stars" aria-label="5 out of 5 stars">
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                </div>
-                <p class="review-text">Mike's not just a handyman — he's the kind of person you want working in your home. Trustworthy, thorough, and reasonably priced. Already booked him for our spring gutter cleaning.</p>
-                <div class="review-footer">
-                    <div class="review-name">Carol T.</div>
-                    <span class="review-platform platform-fb">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <circle cx="12" cy="12" r="12" fill="#1877F2"/>
-                            <path fill="#FFFFFF" d="M13.71 20v-7.3h2.45l.37-2.85h-2.82V8.02c0-.83.23-1.39 1.42-1.39h1.52V4.07c-.26-.03-1.16-.07-2.2-.07-2.18 0-3.67 1.33-3.67 3.78v2.07H8.32v2.85h2.45V20h2.94z"/>
-                        </svg> Facebook
-                    </span>
-                </div>
-            </div>
-
-            <div class="review-card fade-up delay-2">
-                <div class="review-stars" aria-label="5 out of 5 stars">
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                    <i data-lucide="star" aria-hidden="true"></i>
-                </div>
-                <p class="review-text">I was skeptical of hiring someone I found online, but Mike came recommended by three of my neighbors on Nextdoor. Now I understand why. Quick, professional, and left my place spotless.</p>
-                <div class="review-footer">
-                    <div class="review-name">Anthony G.</div>
-                    <span class="review-platform platform-nd">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" role="img">
-                            <path fill="#8ED500" d="M10.42 3.2a2.2 2.2 0 0 0-3.74 1.57v4.66h-2.5A2.2 2.2 0 0 0 2 11.63v8.77C2 21.28 2.72 22 3.6 22h6.31c.88 0 1.6-.72 1.6-1.6v-6.78a.6.6 0 0 1 1.2 0v6.78c0 .88.72 1.6 1.6 1.6h6.09c.88 0 1.6-.72 1.6-1.6v-8.64c0-.65-.27-1.27-.74-1.7l-8.6-7.86a2.18 2.18 0 0 0-2.24 0z"/>
-                        </svg> Nextdoor
-                    </span>
-                </div>
-            </div>
-
-        </div>
-        <div class="reviews-photo fade-up">
-            <a href="https://nextdoor.com/pages/mikes-handyman-and-hvac-services-mayfield-heights-oh/" target="_blank" rel="noopener" class="reviews-photo-link" id="reviewsPhotoLink" aria-label="View Mike's Nextdoor profile">
-                <img src="review.jpg" alt="Customer review highlight">
-            </a>
-        </div>
-        <!-- END REVIEWS -->
     </div>
 </section>
 
@@ -849,16 +975,6 @@
                 <h2 class="sec-title">Proudly serving <em>Northeast Ohio</em></h2>
                 <p class="sec-body" style="color:rgba(255,255,255,0.5);margin-bottom:1.5rem;">Based in Mayfield Heights, Mike serves the broader Cleveland metro and surrounding communities. Not sure if you're covered? Just call — chances are, he comes to you.</p>
                 <a href="#contact" class="btn btn-amber">Check Your Area</a>
-            </div>
-            <div class="fade-up delay-1">
-                <div class="area-map">
-                    <iframe
-                        title="Map of Northeast Ohio service area"
-                        src="https://maps.google.com/maps?q=Northeast%20Ohio&t=&z=8&ie=UTF8&iwloc=&output=embed"
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
             </div>
         </div>
     </div>
@@ -875,17 +991,15 @@
                 <a href="tel:+14402894323" class="contact-phone">(440) 289-4323</a>
 
                 <div class="contact-hours">
-                    <div class="hours-row"><i data-lucide="clock" aria-hidden="true"></i><span class="hours-day">Mon – Fri</span> 7:00am – 6:00pm</div>
-                    <div class="hours-row"><i data-lucide="clock" aria-hidden="true"></i><span class="hours-day">Saturday</span> 8:00am – 4:00pm</div>
-                    <div class="hours-row"><i data-lucide="clock" aria-hidden="true"></i><span class="hours-day">Sunday</span> By appointment</div>
+                    <div class="hours-row"><i data-lucide="clock" aria-hidden="true"></i><span class="hours-day">Mon - Sun</span> 24/7</div>
                 </div>
 
                 <div class="contact-divider"></div>
-                <p class="contact-note">Free estimates always. Mike typically responds within a few hours during business hours. For urgent issues, calling is fastest. Or if it's an emergency, call (440) 289-4323.</p>
+                <p class="contact-note">Request an appointment. Mike usually responds within a few minutes of a call or text. For urgent issues, calling is fastest. Or if it's an emergency, call (440) 289-4323.</p>
             </div>
 
             <div class="contact-form fade-up delay-1" id="contactFormWrap">
-                <div class="form-title">Request an Estimate</div>
+                <div class="form-title">Request an Appointment</div>
                 <div class="form-sub">We'll get back to you within a few hours.</div>
                 <form id="contactForm" onsubmit="submitForm(event)" novalidate>
                     <div class="form-row">
@@ -910,10 +1024,10 @@
                         <label for="service">Service Needed</label>
                         <select id="service" name="service_needed" required>
                             <option value="" disabled selected>Select a service…</option>
-                            <option>General Repairs</option>
-                            <option>HVAC Services</option>
-                            <option>Electrical Work</option>
-                            <option>Seasonal Maintenance</option>
+                            <option>Handyman Jobs</option>
+                            <option>Heating &amp; Cooling</option>
+                            <option>Plumbing</option>
+                            <option>Wiring &amp; Electrical</option>
                             <option>Multiple / Not Sure</option>
                         </select>
                     </div>
@@ -934,6 +1048,23 @@
         </div>
     </div>
 </section>
+
+<aside class="review-widget" id="reviewWidget" aria-live="polite" aria-label="Customer review">
+    <div class="review-widget-header">
+        <span class="review-widget-title">
+            <span class="review-widget-dot" aria-hidden="true"></span>
+            5-Star Neighbor Review
+        </span>
+        <button type="button" class="review-widget-minimize" id="reviewWidgetMinimize" aria-label="Minimize reviews">X</button>
+    </div>
+    <div class="review-widget-stars" aria-hidden="true">★★★★★</div>
+    <p class="review-widget-text" id="reviewWidgetText"></p>
+    <div class="review-widget-footer">
+        <div class="review-widget-name" id="reviewWidgetName"></div>
+        <span class="review-widget-source" id="reviewWidgetSource"></span>
+    </div>
+</aside>
+<button type="button" class="review-widget-launch" id="reviewWidgetLaunch" aria-label="Open reviews">5★ Reviews</button>
 
 <!-- FOOTER -->
 <footer>
@@ -963,6 +1094,17 @@
         </div>
     </div>
 </footer>
+
+<div class="gallery-modal" id="galleryModal" aria-hidden="true" role="dialog" aria-label="Service photo gallery">
+    <div class="gallery-panel">
+        <div class="gallery-header">
+            <div class="gallery-title" id="galleryTitle">Gallery</div>
+            <button type="button" class="gallery-close" id="galleryClose" aria-label="Close gallery">&times;</button>
+        </div>
+        <div class="gallery-view" id="galleryView"></div>
+        <div class="gallery-foot" id="galleryCount"></div>
+    </div>
+</div>
 
 <script>
     // Init Lucide icons
@@ -994,13 +1136,259 @@
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
-            const target = document.querySelector(a.getAttribute('href'));
+            const href = a.getAttribute('href');
+            if (!href || href === '#') return;
+            let target = null;
+            try {
+                target = document.querySelector(href);
+            } catch (_) {
+                return;
+            }
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
+
+    // Service card galleries
+    const galleries = {
+        hvac: {
+            title: 'HVAC',
+            images: [
+                'HVAC/480609920_616513911133036_1014313692197765923_n.jpg',
+                'HVAC/633922555_900295882754836_1255454862596648721_n.jpg',
+                'HVAC/647045292_918849187566172_2545855617805338431_n.jpg',
+                'HVAC/649068419_918849037566187_239109742143510507_n.jpg',
+                'HVAC/649166444_918849114232846_5628941465617453380_n.jpg'
+            ]
+        },
+        plumbing: {
+            title: 'Plumbing',
+            images: [
+                'plumbing/480599434_28357483550566709_7613125900174738773_n.jpg',
+                'plumbing/538337539_762915336492892_715940987902301863_n.jpg',
+                'plumbing/539979409_765275412923551_8044019014022328827_n.jpg',
+                'plumbing/614059698_871070945677330_7239165709538503977_n.jpg',
+                'plumbing/615750735_877655068352251_8507204951265573533_n.jpg',
+                'plumbing/before.jpg',
+                'plumbing/after.jpg'
+            ]
+        },
+        handyman: {
+            title: 'Handy Man',
+            images: [
+                'Handy Man/473082082_590647757052985_8574184342694388885_n.jpg',
+                'Handy Man/480587588_616513497799744_5667044278007063572_n.jpg',
+                'Handy Man/480831788_28489750007340062_5321255764380612285_n.jpg',
+                'Handy Man/481240673_28385387694442961_1904664098363496752_n.jpg',
+                'Handy Man/621215252_887052157412542_1164655631587035071_n.jpg'
+            ]
+        }
+    };
+
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryTitle = document.getElementById('galleryTitle');
+    const galleryView = document.getElementById('galleryView');
+    const galleryCount = document.getElementById('galleryCount');
+    const galleryClose = document.getElementById('galleryClose');
+    let currentGalleryKey = null;
+
+    const renderGalleryGrid = () => {
+        if (!currentGalleryKey) return;
+        const gallery = galleries[currentGalleryKey];
+        galleryTitle.textContent = `${gallery.title} Gallery`;
+        galleryCount.textContent = `${gallery.images.length} photos`;
+        galleryView.innerHTML = '';
+
+        const grid = document.createElement('div');
+        grid.className = 'gallery-grid';
+
+        gallery.images.forEach((imagePath, imageIndex) => {
+            const image = document.createElement('img');
+            image.src = imagePath;
+            image.alt = `${gallery.title} project photo ${imageIndex + 1}`;
+            image.className = 'gallery-grid-image';
+            image.loading = 'lazy';
+            grid.appendChild(image);
+        });
+
+        galleryView.appendChild(grid);
+    };
+
+    const openGallery = (galleryKey) => {
+        if (!galleries[galleryKey]) return;
+        currentGalleryKey = galleryKey;
+        renderGalleryGrid();
+        galleryModal.classList.add('open');
+        galleryModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeGallery = () => {
+        galleryModal.classList.remove('open');
+        galleryModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.svc-card[data-gallery]').forEach(card => {
+        card.addEventListener('click', () => {
+            openGallery(card.dataset.gallery);
+        });
+    });
+
+    galleryClose.addEventListener('click', closeGallery);
+    galleryModal.addEventListener('click', (e) => {
+        if (e.target === galleryModal) {
+            closeGallery();
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (!galleryModal.classList.contains('open')) return;
+        if (e.key === 'Escape') closeGallery();
+    });
+
+    // Plumbing before/after slider
+    const plumbingCompareRange = document.getElementById('plumbingCompareRange');
+    const plumbingCompareAfter = document.getElementById('plumbingCompareAfter');
+    const plumbingCompareDivider = document.getElementById('plumbingCompareDivider');
+    if (plumbingCompareRange && plumbingCompareAfter && plumbingCompareDivider) {
+        const setComparePosition = (value) => {
+            const pos = Number(value);
+            plumbingCompareAfter.style.clipPath = `inset(0 0 0 ${pos}%)`;
+            plumbingCompareDivider.style.left = `${pos}%`;
+        };
+        setComparePosition(plumbingCompareRange.value);
+        let autoCompareAutoplay = true;
+        let autoCompareDirection = 1;
+        let autoComparePos = Number(plumbingCompareRange.value);
+        let autoCompareResumeTimer = null;
+
+        const pauseAutoplay = () => {
+            autoCompareAutoplay = false;
+            if (autoCompareResumeTimer) {
+                clearTimeout(autoCompareResumeTimer);
+                autoCompareResumeTimer = null;
+            }
+        };
+        const resumeAutoplaySoon = () => {
+            if (autoCompareResumeTimer) clearTimeout(autoCompareResumeTimer);
+            autoCompareResumeTimer = setTimeout(() => {
+                autoCompareAutoplay = true;
+            }, 1800);
+        };
+
+        setInterval(() => {
+            if (!autoCompareAutoplay) return;
+            autoComparePos += 0.7 * autoCompareDirection;
+            if (autoComparePos >= 80 || autoComparePos <= 20) {
+                autoCompareDirection *= -1;
+                autoComparePos = Math.max(20, Math.min(80, autoComparePos));
+            }
+            plumbingCompareRange.value = String(Math.round(autoComparePos));
+            setComparePosition(autoComparePos);
+        }, 30);
+
+        plumbingCompareRange.addEventListener('input', () => {
+            pauseAutoplay();
+            setComparePosition(plumbingCompareRange.value);
+        });
+        ['pointerup', 'mouseup', 'touchend', 'change', 'blur'].forEach((evtName) => {
+            plumbingCompareRange.addEventListener(evtName, resumeAutoplaySoon);
+        });
+        ['pointerdown', 'mousedown', 'touchstart', 'click'].forEach((evtName) => {
+            plumbingCompareRange.addEventListener(evtName, (e) => {
+                pauseAutoplay();
+                e.stopPropagation();
+            });
+        });
+    }
+
+    // Rotating review widget
+    const reviewWidget = document.getElementById('reviewWidget');
+    if (reviewWidget) {
+        const reviewWidgetText = document.getElementById('reviewWidgetText');
+        const reviewWidgetName = document.getElementById('reviewWidgetName');
+        const reviewWidgetSource = document.getElementById('reviewWidgetSource');
+        const reviewWidgetMinimize = document.getElementById('reviewWidgetMinimize');
+        const reviewWidgetLaunch = document.getElementById('reviewWidgetLaunch');
+        const reviews = [
+            {
+                text: "Mike fixed our leaky faucet and replaced a light fixture the same afternoon he called back. Honest price, clean work, no fuss. He's our go-to from now on.",
+                name: "Jennifer R.",
+                source: "Facebook",
+                sourceClass: "platform-fb"
+            },
+            {
+                text: "I've used Mike twice now - once for drywall and once for HVAC maintenance. Both times he was on time, explained everything clearly, and the price was exactly what he quoted. Highly recommend.",
+                name: "Tom W.",
+                source: "Nextdoor",
+                sourceClass: "platform-nd"
+            },
+            {
+                text: "Finally found a handyman in Beachwood who actually shows up when he says he will. Mike patched and painted a whole section of our living room - you can't even tell anything was wrong.",
+                name: "Sandra M.",
+                source: "Facebook",
+                sourceClass: "platform-fb"
+            },
+            {
+                text: "Called Mike on a Monday, he was at our house Wednesday morning. Fixed three things we'd been putting off for months. We should have called sooner. Great guy, great prices.",
+                name: "Dave & Lisa K.",
+                source: "Nextdoor",
+                sourceClass: "platform-nd"
+            },
+            {
+                text: "Mike's not just a handyman - he's the kind of person you want working in your home. Trustworthy, thorough, and reasonably priced. Already booked him for our spring gutter cleaning.",
+                name: "Carol T.",
+                source: "Facebook",
+                sourceClass: "platform-fb"
+            },
+            {
+                text: "I was skeptical of hiring someone I found online, but Mike came recommended by three of my neighbors on Nextdoor. Now I understand why. Quick, professional, and left my place spotless.",
+                name: "Anthony G.",
+                source: "Nextdoor",
+                sourceClass: "platform-nd"
+            }
+        ];
+
+        let reviewIndex = 0;
+        const collapseWidget = () => {
+            reviewWidget.classList.add('is-collapsed');
+            if (reviewWidgetLaunch) {
+                reviewWidgetLaunch.setAttribute('aria-expanded', 'false');
+            }
+        };
+        const expandWidget = () => {
+            reviewWidget.classList.remove('is-collapsed');
+            if (reviewWidgetLaunch) {
+                reviewWidgetLaunch.setAttribute('aria-expanded', 'true');
+            }
+        };
+        const renderReview = (idx) => {
+            const review = reviews[idx];
+            reviewWidgetText.textContent = review.text;
+            reviewWidgetName.textContent = review.name;
+            reviewWidgetSource.textContent = review.source;
+            reviewWidgetSource.className = `review-widget-source ${review.sourceClass}`;
+        };
+
+        renderReview(reviewIndex);
+        if (reviewWidgetMinimize) {
+            reviewWidgetMinimize.addEventListener('click', collapseWidget);
+        }
+        if (reviewWidgetLaunch) {
+            reviewWidgetLaunch.addEventListener('click', expandWidget);
+            reviewWidgetLaunch.setAttribute('aria-expanded', 'true');
+        }
+        setInterval(() => {
+            reviewWidget.classList.add('is-fading');
+            setTimeout(() => {
+                reviewIndex = (reviewIndex + 1) % reviews.length;
+                renderReview(reviewIndex);
+                reviewWidget.classList.remove('is-fading');
+            }, 220);
+        }, 5500);
+    }
 
     // Phone formatter
     document.getElementById('phone').addEventListener('input', function(e) {
